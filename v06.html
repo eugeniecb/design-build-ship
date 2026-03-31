@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eugenie's Wishlist — Field Notes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f4f0e8;
+      color: #2a2418;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+
+    header {
+      background: #2d4a35;
+      color: #e8e0cc;
+      padding: 56px 48px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle topographic ring — pure CSS */
+    header::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow:
+        0 0 0 24px rgba(255,255,255,0.04),
+        0 0 0 52px rgba(255,255,255,0.03),
+        0 0 0 84px rgba(255,255,255,0.02);
+      pointer-events: none;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, #8fae74, #c8a96e, #8fae74);
+      opacity: 0.6;
+    }
+
+    .header-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-eyebrow {
+      font-family: sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #8fae74;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: normal;
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      color: #f0eadc;
+      margin-bottom: 20px;
+    }
+
+    header h1 em {
+      font-style: italic;
+      color: #c8a96e;
+    }
+
+    .header-desc {
+      font-family: sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: #7a9e6e;
+      max-width: 420px;
+    }
+
+    .header-meta {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(143, 174, 116, 0.25);
+      display: flex;
+      gap: 32px;
+    }
+
+    .meta-item {
+      font-family: sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #5a7a50;
+    }
+
+    .meta-item span {
+      display: block;
+      color: #8fae74;
+      margin-top: 3px;
+    }
+
+    /* ─── MAIN ─── */
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 72px;
+    }
+
+    /* ─── ITEMS ─── */
+
+    .item {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 0 20px;
+      padding: 32px 0;
+      border-bottom: 1px solid #ddd8cc;
+      align-items: start;
+    }
+
+    .item:first-child {
+      border-top: 1px solid #ddd8cc;
+    }
+
+    .item-marker {
+      padding-top: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .marker-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #2d4a35;
+      flex-shrink: 0;
+    }
+
+    .item.claimed .marker-dot {
+      background: #c0b8a8;
+    }
+
+    .marker-line {
+      width: 1px;
+      flex: 1;
+      background: #c8c0b0;
+      min-height: 60px;
+    }
+
+    .item-body {}
+
+    .item-category {
+      font-family: sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8fae74;
+      margin-bottom: 8px;
+    }
+
+    .item.claimed .item-category {
+      color: #b8b0a0;
+    }
+
+    .item-name {
+      font-size: 1.2rem;
+      font-weight: normal;
+      line-height: 1.25;
+      color: #2a2418;
+      margin-bottom: 8px;
+    }
+
+    .item.claimed .item-name {
+      text-decoration: line-through;
+      color: #a8a090;
+      text-decoration-color: #c8c0b0;
+    }
+
+    .item-note {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: #6a6050;
+    }
+
+    .item.claimed .item-note {
+      color: #b0a898;
+    }
+
+    .item-right {
+      text-align: right;
+      padding-top: 4px;
+    }
+
+    .item-price {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #5a7a50;
+      white-space: nowrap;
+    }
+
+    .item.claimed .item-price {
+      color: #b8b0a0;
+    }
+
+    .claimed-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-family: sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #a8a090;
+      border: 1px solid #c8c0b0;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    /* ─── CLOSING NOTE ─── */
+
+    .closing {
+      margin-top: 48px;
+      padding: 28px 32px;
+      background: #eee8d8;
+      border-left: 3px solid #8fae74;
+    }
+
+    .closing p {
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #5a5040;
+    }
+
+    /* ─── FOOTER ─── */
+
+    footer {
+      background: #2d4a35;
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-note {
+      font-family: sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #5a7a50;
+    }
+
+    footer a {
+      font-family: sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #8fae74;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: #c8a96e; }
+
+    /* ─── RESPONSIVE ─── */
+
+    @media (max-width: 600px) {
+      header { padding: 40px 24px 36px; }
+      .header-meta { flex-wrap: wrap; gap: 20px; }
+      .item { grid-template-columns: 28px 1fr auto; gap: 0 14px; }
+      .marker-line { min-height: 40px; }
+      footer { flex-direction: column; gap: 12px; padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="header-eyebrow">Field Notes &nbsp;·&nbsp; Birthday 2026</div>
+      <h1>Things I'd Love<br>to <em>Find</em> This Season</h1>
+      <p class="header-desc">A careful list — things worth seeking out. Consider this less a registry and more a set of trail markers. Follow any one of them, or none at all.</p>
+      <div class="header-meta">
+        <div class="meta-item">Curator<span>Eugenie Gruman</span></div>
+        <div class="meta-item">Season<span>Spring / Summer</span></div>
+        <div class="meta-item">Items<span>7 listed</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="item">
+      <div class="item-marker">
+        <div class="marker-dot"></div>
+        <div class="marker-line"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-category">Experience</div>
+        <div class="item-name">A museum membership for the year</div>
+        <div class="item-note">MoMA, the Met, the Whitney — any one-year pass. I'd use it constantly, on quiet mornings and rainy afternoons. The kind of gift that keeps arriving.</div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">$60 – 120</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-marker">
+        <div class="marker-dot"></div>
+        <div class="marker-line"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-category">Reading</div>
+        <div class="item-name">Books you'd personally recommend</div>
+        <div class="item-note">Fiction, essays, nature writing, memoir — whatever moved you recently. A book chosen by someone I love always turns out to be the right one.</div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">~$20</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-marker">
+        <div class="marker-dot"></div>
+        <div class="marker-line"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-category">Morning Ritual</div>
+        <div class="item-name">Specialty coffee subscription — 3 months</div>
+        <div class="item-note">Single-origin, interesting provenance, tasting notes worth reading. There's something about a considered cup that makes the whole morning feel earned.</div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">$45 – 75</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-marker">
+        <div class="marker-dot"></div>
+        <div class="marker-line"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-category">Home</div>
+        <div class="item-name">A candle — warm, woodsy, or earthy</div>
+        <div class="item-note">Diptyque, Aesop, or a smaller maker you trust. Cedar, vetiver, fig. Something to light when the light outside is just right.</div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">$30 – 60</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-marker">
+        <div class="marker-dot"></div>
+        <div class="marker-line"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-category">Skin</div>
+        <div class="item-name">A fine hand cream</div>
+        <div class="item-note">The kind I'd never justify for myself — something with a considered scent and weight to it. L'Occitane, Aesop, whatever you'd choose.</div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">~$25</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-marker">
+        <div class="marker-dot"></div>
+        <div class="marker-line"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-category">From the Heart</div>
+        <div class="item-name">Something only you could give</div>
+        <div class="item-note">Handmade, foraged, handpicked, or simply something you felt I should have. These are the gifts I remember longest.</div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">—</div>
+      </div>
+    </div>
+
+    <div class="item claimed">
+      <div class="item-marker">
+        <div class="marker-dot"></div>
+      </div>
+      <div class="item-body">
+        <div class="item-category">Wear</div>
+        <div class="item-name">Linen scarf, natural tones</div>
+        <div class="item-note">Lightweight, summer into fall. Already found and on its way. Thank you.</div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">—</div>
+        <div class="claimed-badge">Claimed</div>
+      </div>
+    </div>
+
+    <div class="closing">
+      <p>"Whatever you bring — or simply your presence — is more than enough. Thank you for being someone I get to celebrate with."</p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">Eugenie Gruman &nbsp;·&nbsp; 2026</span>
+    <a href="index.html">← Back to gallery</a>
+  </footer>
+
+</body>
+</html>
