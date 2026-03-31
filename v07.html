@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eugenie's Wishlist — Scrapbook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Caveat', cursive;
+      background-color: #e8dfc8;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 27px,
+          rgba(180,160,120,0.15) 28px
+        );
+      min-height: 100vh;
+      padding: 48px 24px 80px;
+    }
+
+    /* ─── HEADER ─── */
+
+    header {
+      max-width: 720px;
+      margin: 0 auto 56px;
+      position: relative;
+    }
+
+    .header-tape {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 80px;
+      height: 22px;
+      background: rgba(255, 230, 100, 0.6);
+      border-left: 1px solid rgba(200,180,60,0.3);
+      border-right: 1px solid rgba(200,180,60,0.3);
+      z-index: 2;
+    }
+
+    .header-card {
+      background: #fff;
+      padding: 40px 36px 32px;
+      transform: rotate(-0.5deg);
+      box-shadow: 3px 4px 12px rgba(80,60,30,0.15), 0 1px 3px rgba(80,60,30,0.1);
+      position: relative;
+    }
+
+    .title-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .cutout {
+      display: inline-block;
+      font-family: 'Special Elite', monospace;
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      font-weight: normal;
+      line-height: 1;
+      padding: 4px 10px;
+    }
+
+    .cutout-dark  { background: #1a1a1a; color: #f5f0e8; }
+    .cutout-red   { background: #c0392b; color: #fff; }
+    .cutout-sage  { background: #7a9e6e; color: #fff; }
+    .cutout-cream { background: #f5e6c8; color: #3a2a10; border: 2px solid #c8b070; }
+
+    .header-sub {
+      font-size: 1.4rem;
+      color: #6a5a40;
+      line-height: 1.3;
+    }
+
+    .header-sub em {
+      font-style: italic;
+      color: #c0392b;
+    }
+
+    .doodle-star {
+      position: absolute;
+      bottom: 20px;
+      right: 28px;
+      font-size: 1.8rem;
+      transform: rotate(15deg);
+      opacity: 0.6;
+    }
+
+    /* ─── GRID ─── */
+
+    .scrapbook {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* ─── ITEM CARD ─── */
+
+    .item {
+      position: relative;
+      padding: 28px 22px 22px;
+      box-shadow: 2px 3px 10px rgba(80,60,30,0.14), 0 1px 2px rgba(80,60,30,0.08);
+    }
+
+    /* tape strip */
+    .item::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 64px;
+      height: 20px;
+      background: rgba(255, 230, 100, 0.65);
+      border-left: 1px solid rgba(200,180,60,0.25);
+      border-right: 1px solid rgba(200,180,60,0.25);
+    }
+
+    .item.tape-left::before  { left: 22px; transform: none; }
+    .item.tape-right::before { left: auto; right: 22px; transform: none; }
+    .item.tape-tilt::before  { transform: translateX(-50%) rotate(3deg); }
+
+    /* background variants */
+    .bg-white  { background: #fff; }
+    .bg-yellow { background: #fef9c3; }
+    .bg-blue   { background: #e8f0fe; }
+    .bg-pink   { background: #fde8f0; }
+    .bg-green  { background: #edf5e8; }
+    .bg-peach  { background: #feeee0; }
+
+    /* rotation variants */
+    .rot-l1 { transform: rotate(-1.8deg); }
+    .rot-l2 { transform: rotate(-0.8deg); }
+    .rot-r1 { transform: rotate(1.2deg);  }
+    .rot-r2 { transform: rotate(2.2deg);  }
+    .rot-r3 { transform: rotate(0.5deg);  }
+
+    .item-category {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #a08060;
+      margin-bottom: 8px;
+    }
+
+    .item.claimed .item-category { color: #c0b8a8; }
+
+    .item-name {
+      font-size: 1.45rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: #2a1e0e;
+      margin-bottom: 8px;
+    }
+
+    .item.claimed .item-name {
+      text-decoration: line-through;
+      text-decoration-color: #c0392b;
+      color: #a09080;
+    }
+
+    .item-note {
+      font-size: 1.05rem;
+      color: #6a5a40;
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .item.claimed .item-note { color: #b0a898; }
+
+    .item-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    /* price circle */
+    .item-price {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid #c0392b;
+      font-family: 'Caveat', cursive;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #c0392b;
+      text-align: center;
+      line-height: 1.2;
+      transform: rotate(-4deg);
+      flex-shrink: 0;
+    }
+
+    .item.claimed .item-price {
+      border-color: #c0b8a8;
+      color: #c0b8a8;
+    }
+
+    .claimed-sticker {
+      display: inline-block;
+      background: #c0392b;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      transform: rotate(-2deg);
+    }
+
+    /* wide card — spans full width */
+    .item.wide {
+      grid-column: 1 / -1;
+    }
+
+    .item.wide .item-name { font-size: 1.7rem; }
+
+    /* ─── FOOTER ─── */
+
+    footer {
+      max-width: 720px;
+      margin: 40px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-note {
+      font-size: 1.15rem;
+      color: #7a6a50;
+      font-style: italic;
+    }
+
+    footer a {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #2a1e0e;
+      text-decoration: none;
+      background: rgba(255,230,100,0.65);
+      padding: 5px 14px;
+      transform: rotate(1deg);
+      display: inline-block;
+    }
+
+    footer a:hover { background: rgba(255,200,80,0.8); }
+
+    /* ─── RESPONSIVE ─── */
+
+    @media (max-width: 560px) {
+      .scrapbook { grid-template-columns: 1fr; }
+      .item.wide { grid-column: auto; }
+      .rot-l1, .rot-l2, .rot-r1, .rot-r2, .rot-r3 { transform: none; }
+      footer { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-tape"></div>
+    <div class="header-card">
+      <div class="title-block">
+        <span class="cutout cutout-dark">Eugenie's</span>
+        <span class="cutout cutout-red">Wish</span>
+        <span class="cutout cutout-sage">List</span>
+        <span class="cutout cutout-cream">2026 🎂</span>
+      </div>
+      <p class="header-sub">things I'd <em>really really</em> love — pick anything,<br>or just bring yourself, that's always enough ♡</p>
+      <div class="doodle-star">✦</div>
+    </div>
+  </header>
+
+  <!-- SCRAPBOOK GRID -->
+  <div class="scrapbook">
+
+    <!-- WIDE: museum -->
+    <div class="item wide bg-white rot-l2 tape-tilt">
+      <div class="item-category">Experience</div>
+      <div class="item-name">A museum membership for the whole year</div>
+      <div class="item-note">MoMA, the Met, the Whitney — any one-year pass. I would use it all the time. Rainy Tuesdays, quiet mornings, dragging friends along.</div>
+      <div class="item-footer">
+        <div class="item-price">$60–<br>120</div>
+      </div>
+    </div>
+
+    <!-- books -->
+    <div class="item bg-yellow rot-l1 tape-left">
+      <div class="item-category">Reading</div>
+      <div class="item-name">Books you'd recommend</div>
+      <div class="item-note">Fiction, essays, memoir — whatever you loved recently. Your taste is my algorithm.</div>
+      <div class="item-footer">
+        <div class="item-price">~$20</div>
+      </div>
+    </div>
+
+    <!-- coffee -->
+    <div class="item bg-peach rot-r1 tape-right">
+      <div class="item-category">Morning Ritual</div>
+      <div class="item-name">Specialty coffee sub (3 mo.)</div>
+      <div class="item-note">Single-origin, interesting. Comes with tasting notes I will absolutely read.</div>
+      <div class="item-footer">
+        <div class="item-price">$45–<br>75</div>
+      </div>
+    </div>
+
+    <!-- candle -->
+    <div class="item bg-green rot-r3">
+      <div class="item-category">Home</div>
+      <div class="item-name">A really good candle</div>
+      <div class="item-note">Warm, woodsy, or earthy. Diptyque, Aesop, or any indie brand you love.</div>
+      <div class="item-footer">
+        <div class="item-price">$30–<br>60</div>
+      </div>
+    </div>
+
+    <!-- hand cream -->
+    <div class="item bg-pink rot-l2 tape-tilt">
+      <div class="item-category">Skin</div>
+      <div class="item-name">Fancy hand cream</div>
+      <div class="item-note">The kind I'd never buy for myself but love receiving. Anything with a nice weight to it.</div>
+      <div class="item-footer">
+        <div class="item-price">~$25</div>
+      </div>
+    </div>
+
+    <!-- wildcard -->
+    <div class="item bg-blue rot-r2 tape-left">
+      <div class="item-category">Wildcard ✦</div>
+      <div class="item-name">Something from the heart</div>
+      <div class="item-note">Handmade, handpicked, or just something you thought I'd love. These are the gifts I remember.</div>
+      <div class="item-footer">
+        <div class="item-price">♡</div>
+      </div>
+    </div>
+
+    <!-- claimed: scarf -->
+    <div class="item wide bg-white rot-l1 claimed">
+      <div class="item-category">Wear</div>
+      <div class="item-name">Linen scarf — neutral tones</div>
+      <div class="item-note">Lightweight, summer into fall. Already on its way!</div>
+      <div class="item-footer">
+        <div class="item-price">—</div>
+        <div class="claimed-sticker">✓ Claimed!</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">thank you for being here ♡</span>
+    <a href="index.html">← back to gallery</a>
+  </footer>
+
+</body>
+</html>
