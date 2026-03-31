@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eugenie's Wishlist</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fdf6f0;
+      color: #3a3330;
+      min-height: 100vh;
+      padding: 48px 24px 80px;
+    }
+
+    header {
+      max-width: 600px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    header .occasion {
+      display: inline-block;
+      background: #f5e6d8;
+      color: #a07050;
+      font-family: sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: #2e2825;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #7a6a60;
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: #e8cfc0;
+      margin: 28px auto 0;
+      border-radius: 2px;
+    }
+
+    .wishlist {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 1px 6px rgba(160, 112, 80, 0.08);
+      border: 1px solid #f0e4d8;
+    }
+
+    .item-emoji {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      background: #fdf0e8;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-size: 1rem;
+      font-weight: normal;
+      color: #2e2825;
+      margin-bottom: 4px;
+    }
+
+    .item-note {
+      font-family: sans-serif;
+      font-size: 0.82rem;
+      color: #9a8878;
+      line-height: 1.4;
+    }
+
+    .item-price {
+      font-family: sans-serif;
+      font-size: 0.9rem;
+      color: #c09070;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .item.claimed {
+      opacity: 0.5;
+    }
+
+    .item.claimed .item-name {
+      text-decoration: line-through;
+      color: #9a8878;
+    }
+
+    .item-badge {
+      font-family: sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #e8f5e9;
+      color: #5a9060;
+      padding: 3px 10px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      max-width: 600px;
+      margin: 56px auto 0;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 0.82rem;
+      color: #b0a098;
+    }
+
+    footer a {
+      color: #c09070;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="occasion">Birthday 2026</span>
+    <h1>Eugenie's Wishlist</h1>
+    <p>A few things I'd love — big and small. No pressure at all, just excited you're here!</p>
+    <div class="divider"></div>
+  </header>
+
+  <div class="wishlist">
+
+    <div class="item">
+      <div class="item-emoji">📚</div>
+      <div class="item-info">
+        <div class="item-name">A stack of good books</div>
+        <div class="item-note">Fiction, essays, anything you'd personally recommend</div>
+      </div>
+      <div class="item-price">~$20</div>
+    </div>
+
+    <div class="item">
+      <div class="item-emoji">🕯️</div>
+      <div class="item-info">
+        <div class="item-name">Candle — warm or woodsy scent</div>
+        <div class="item-note">Diptyque, Aesop, or any indie brand you love</div>
+      </div>
+      <div class="item-price">$30–60</div>
+    </div>
+
+    <div class="item">
+      <div class="item-emoji">🧴</div>
+      <div class="item-info">
+        <div class="item-name">Fancy hand cream</div>
+        <div class="item-note">The kind I'd never buy myself but love when gifted</div>
+      </div>
+      <div class="item-price">~$25</div>
+    </div>
+
+    <div class="item">
+      <div class="item-emoji">🎨</div>
+      <div class="item-info">
+        <div class="item-name">Museum membership</div>
+        <div class="item-note">MoMA, the Met, or local — any one-year pass</div>
+      </div>
+      <div class="item-price">$60–120</div>
+    </div>
+
+    <div class="item">
+      <div class="item-emoji">☕</div>
+      <div class="item-info">
+        <div class="item-name">Specialty coffee subscription</div>
+        <div class="item-note">3-month bag of something interesting and single-origin</div>
+      </div>
+      <div class="item-price">$45–75</div>
+    </div>
+
+    <div class="item claimed">
+      <div class="item-emoji">🧣</div>
+      <div class="item-info">
+        <div class="item-name">Cozy linen scarf</div>
+        <div class="item-note">Neutral tones, lightweight — summer into fall</div>
+      </div>
+      <div class="item-badge">Claimed</div>
+    </div>
+
+    <div class="item">
+      <div class="item-emoji">🌿</div>
+      <div class="item-info">
+        <div class="item-name">Something from your heart</div>
+        <div class="item-note">Homemade, handpicked, or something you just thought I'd like — always the best gifts</div>
+      </div>
+      <div class="item-price">✨</div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Made with care &nbsp;·&nbsp; <a href="index.html">Back to gallery</a></p>
+  </footer>
+
+</body>
+</html>
