@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eugenie's Wishlist</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f4f4f0;
+      color: #111;
+      min-height: 100vh;
+    }
+
+    /* ─── TOP NAV ─── */
+
+    .topnav {
+      background: #111;
+      padding: 0 32px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topnav::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      background: #c8f026;
+      border-radius: 50%;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .topnav-logo {
+      font-size: 1.05rem;
+      font-weight: normal;
+      font-style: italic;
+      color: #fff;
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topnav-logo span { color: #c8f026; }
+
+    .topnav-links {
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topnav-links a { color: #888; text-decoration: none; }
+    .topnav-links a:hover { color: #fff; }
+
+    .topnav-links .ship-badge {
+      background: #c8f026;
+      color: #111;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* ─── HERO ─── */
+
+    .hero {
+      background: #111;
+      padding: 48px 24px 52px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      background: #c8f026;
+      border-radius: 50%;
+      opacity: 0.12;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 20%;
+      width: 160px; height: 160px;
+      background: #ff5c2b;
+      border-radius: 50%;
+      opacity: 0.15;
+    }
+
+    /* ─── POST-IT ─── */
+
+    .postit-wrap {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+    }
+
+    /* washi tape — orange */
+    .postit-wrap::before {
+      content: '';
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1.5deg);
+      width: 72px;
+      height: 22px;
+      background: rgba(255, 92, 43, 0.7);
+      border-left: 1px solid rgba(200, 60, 10, 0.3);
+      border-right: 1px solid rgba(200, 60, 10, 0.3);
+      z-index: 2;
+    }
+
+    .postit {
+      background: #e4f826;
+      padding: 32px 36px 28px;
+      max-width: 420px;
+      text-align: center;
+      transform: rotate(-1.2deg);
+      box-shadow:
+        3px 4px 14px rgba(0, 0, 0, 0.25),
+        0 1px 3px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .postit::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      right: 12px;
+      width: 60%;
+      height: 8px;
+      background: rgba(0, 0, 0, 0.1);
+      filter: blur(4px);
+      border-radius: 50%;
+    }
+
+    .postit-pill {
+      font-family: sans-serif;
+      display: inline-block;
+      background: #111;
+      color: #e4f826;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .postit h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: normal;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .postit h1 em {
+      font-style: italic;
+      color: #ff5c2b;
+    }
+
+    .postit-note {
+      font-family: sans-serif;
+      font-size: 0.82rem;
+      color: #3a3a30;
+      line-height: 1.65;
+    }
+
+    /* ─── FILTER BAR ─── */
+
+    .filter-bar {
+      font-family: sans-serif;
+      background: #fff;
+      padding: 12px 32px;
+      border-bottom: 1px solid #e8e8e0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1.5px solid #d0d0c8;
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #444;
+      background: #f4f4f0;
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .pill .chevron { font-size: 0.58rem; color: #aaa; }
+
+    .filter-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #444;
+      white-space: nowrap;
+    }
+
+    .filter-right .count { color: #111; }
+
+    .sort-select {
+      font-family: sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1.5px solid #d0d0c8;
+      border-radius: 100px;
+      padding: 5px 12px;
+      color: #444;
+      background: #f4f4f0;
+      cursor: pointer;
+    }
+
+    /* ─── GRID ─── */
+
+    .grid-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    /* ─── CARD ─── */
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .card:hover {
+      border-color: #c8f026;
+      transform: translateY(-3px);
+    }
+
+    .card-swatch {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      position: relative;
+    }
+
+    /* Gender-neutral Gen Z swatches */
+    .sw-lime   { background: #e4f8a0; }
+    .sw-sky    { background: #b8ecf8; }
+    .sw-orange { background: #ffd8b8; }
+    .sw-yellow { background: #fef5a0; }
+    .sw-teal   { background: #a8f0dc; }
+    .sw-coral  { background: #ffd0b8; }
+    .sw-stone  { background: #e8e8e0; }
+
+    .top-badge {
+      font-family: sans-serif;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #111;
+      color: #c8f026;
+      border-radius: 100px;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 3px 9px;
+    }
+
+    .claimed-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .claimed-overlay span {
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+
+    .card-info {
+      padding: 12px 14px;
+      border-top: 1.5px solid #f0f0e8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .card-text { min-width: 0; }
+
+    .card-tag {
+      font-family: sans-serif;
+      display: inline-block;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-bottom: 3px;
+    }
+
+    .tag-lime   { background: #e4f8a0; color: #4a6010; }
+    .tag-sky    { background: #b8ecf8; color: #106080; }
+    .tag-orange { background: #ffd8b8; color: #803010; }
+    .tag-yellow { background: #fef5a0; color: #706010; }
+    .tag-teal   { background: #a8f0dc; color: #106050; }
+    .tag-coral  { background: #ffd0b8; color: #804020; }
+    .tag-stone  { background: #e8e8e0; color: #606058; }
+
+    .card-name {
+      font-size: 0.88rem;
+      font-weight: normal;
+      font-style: italic;
+      color: #111;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card.claimed .card-name {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .card-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .card-price {
+      font-size: 0.8rem;
+      font-weight: normal;
+      color: #111;
+      white-space: nowrap;
+    }
+
+    .card.claimed .card-price { color: #ccc; }
+
+    .card-btn {
+      font-family: sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary         { background: #111; color: #c8f026; }
+    .btn-primary:hover   { background: #333; }
+    .btn-outline         { background: #f4f4f0; color: #111; border: 1.5px solid #d0d0c8; }
+    .btn-outline:hover   { background: #e4f826; border-color: #c8f026; }
+    .btn-disabled        { background: #f0f0e8; color: #ccc; cursor: default; }
+
+    /* ─── FOOTER ─── */
+
+    footer {
+      background: #111;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-note {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    footer a {
+      font-family: sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #111;
+      text-decoration: none;
+      background: #c8f026;
+      padding: 7px 16px;
+      border-radius: 100px;
+    }
+
+    footer a:hover { background: #d8ff40; }
+
+    /* ─── RESPONSIVE ─── */
+
+    @media (max-width: 600px) {
+      .topnav { padding: 0 16px; }
+      .topnav-links .ship-badge { display: none; }
+      .hero { padding: 40px 16px 44px; }
+      .postit { padding: 24px 24px 20px; }
+      .filter-bar { padding: 10px 16px; }
+      .grid-wrap { padding: 24px 16px 60px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <div class="topnav-logo"><em>wish<span>list</span></em> ✦</div>
+    <div class="topnav-links">
+      <a href="#">about</a>
+      <a href="#">contact</a>
+      <span class="ship-badge">🚚 free shipping always</span>
+      <a href="#">🛒</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="postit-wrap">
+      <div class="postit">
+        <div class="postit-pill">🎀 Birthday 2026</div>
+        <h1>Eugenie's <em>Wishlist</em></h1>
+        <p class="postit-note">A few things I'd genuinely love — big, small, and everything in between. No pressure at all, just happy you're here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="filter-pills">
+      <div class="pill">Categories <span class="chevron">▾</span></div>
+      <div class="pill">Availability <span class="chevron">▾</span></div>
+      <div class="pill">Price <span class="chevron">▾</span></div>
+      <div class="pill">Shipping <span class="chevron">▾</span></div>
+    </div>
+    <div class="filter-right">
+      <span><span class="count">7</span> gifts</span>
+      <select class="sort-select">
+        <option>Sort: Featured</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid-wrap">
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-swatch sw-lime">
+          🎨
+          <div class="top-badge">★ Most wanted</div>
+        </div>
+        <div class="card-info">
+          <div class="card-text">
+            <span class="card-tag tag-lime">Experience</span>
+            <div class="card-name">Museum membership</div>
+          </div>
+          <div class="card-right">
+            <div class="card-price">$60–120</div>
+            <button class="card-btn btn-primary">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-swatch sw-yellow">
+          📚
+          <div class="top-badge">★ Most wanted</div>
+        </div>
+        <div class="card-info">
+          <div class="card-text">
+            <span class="card-tag tag-yellow">Reading</span>
+            <div class="card-name">Books you'd recommend</div>
+          </div>
+          <div class="card-right">
+            <div class="card-price">~$20</div>
+            <button class="card-btn btn-primary">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-swatch sw-orange">☕</div>
+        <div class="card-info">
+          <div class="card-text">
+            <span class="card-tag tag-orange">Coffee</span>
+            <div class="card-name">Coffee sub, 3 months</div>
+          </div>
+          <div class="card-right">
+            <div class="card-price">$45–75</div>
+            <button class="card-btn btn-primary">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-swatch sw-teal">🕯️</div>
+        <div class="card-info">
+          <div class="card-text">
+            <span class="card-tag tag-teal">Home</span>
+            <div class="card-name">A really good candle</div>
+          </div>
+          <div class="card-right">
+            <div class="card-price">$30–60</div>
+            <button class="card-btn btn-outline">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-swatch sw-sky">🧴</div>
+        <div class="card-info">
+          <div class="card-text">
+            <span class="card-tag tag-sky">Skin</span>
+            <div class="card-name">Fancy hand cream</div>
+          </div>
+          <div class="card-right">
+            <div class="card-price">~$25</div>
+            <button class="card-btn btn-outline">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-swatch sw-coral">
+          💌
+          <div class="top-badge">★ Most wanted</div>
+        </div>
+        <div class="card-info">
+          <div class="card-text">
+            <span class="card-tag tag-coral">Wildcard</span>
+            <div class="card-name">From the heart</div>
+          </div>
+          <div class="card-right">
+            <div class="card-price">♡</div>
+            <button class="card-btn btn-outline">Claim</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card claimed">
+        <div class="card-swatch sw-stone">
+          🧣
+          <div class="claimed-overlay"><span>Purchased ✓</span></div>
+        </div>
+        <div class="card-info">
+          <div class="card-text">
+            <span class="card-tag tag-stone">Wear</span>
+            <div class="card-name">Linen scarf</div>
+          </div>
+          <div class="card-right">
+            <div class="card-price">—</div>
+            <button class="card-btn btn-disabled" disabled>Taken</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">Thank you for being here — it means everything. ✦</span>
+    <a href="index.html">← Back to gallery</a>
+  </footer>
+
+</body>
+</html>
