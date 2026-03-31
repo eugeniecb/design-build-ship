@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WISHLIST / EUGENIE / 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #fff;
+      color: #000;
+      border: 6px solid #000;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+
+    header {
+      border-bottom: 6px solid #000;
+      display: grid;
+      grid-template-columns: 1fr auto;
+    }
+
+    .header-main {
+      padding: 32px 40px 28px;
+      border-right: 6px solid #000;
+    }
+
+    .header-label {
+      font-size: 0.7rem;
+      font-weight: bold;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      background: #000;
+      color: #ffff00;
+      display: inline-block;
+      padding: 4px 10px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-family: Arial Black, Arial, sans-serif;
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      font-weight: 900;
+      line-height: 0.88;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .header-meta {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 200px;
+    }
+
+    .header-meta .meta-line {
+      font-size: 0.72rem;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    .header-meta .meta-count {
+      font-family: Arial Black, Arial, sans-serif;
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      color: #000;
+    }
+
+    .header-meta .meta-count span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ─── NOTICE BAR ─── */
+
+    .notice-bar {
+      background: #ffff00;
+      border-bottom: 4px solid #000;
+      padding: 10px 40px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ─── ITEMS ─── */
+
+    .item {
+      border-bottom: 4px solid #000;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      min-height: 120px;
+    }
+
+    .item-num {
+      border-right: 4px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial Black, Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      background: #000;
+      color: #fff;
+    }
+
+    .item.claimed .item-num {
+      background: #ccc;
+      color: #888;
+    }
+
+    .item-body {
+      padding: 20px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .item-category {
+      font-size: 0.62rem;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .item.claimed .item-category {
+      color: #bbb;
+    }
+
+    .item-name {
+      font-family: Arial Black, Arial, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .item.claimed .item-name {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .item-note {
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: #444;
+      max-width: 520px;
+    }
+
+    .item.claimed .item-note {
+      color: #bbb;
+    }
+
+    .item-price-col {
+      border-left: 4px solid #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 24px;
+      min-width: 120px;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .item.claimed .item-price-col {
+      border-left-color: #ccc;
+    }
+
+    .item-price {
+      font-family: Arial Black, Arial, sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .item.claimed .item-price {
+      color: #bbb;
+    }
+
+    .claimed-stamp {
+      font-size: 0.6rem;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 2px solid #ccc;
+      color: #aaa;
+      padding: 3px 8px;
+    }
+
+    /* ─── FOOTER ─── */
+
+    footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 20px 40px;
+      border-top: 4px solid #000;
+    }
+
+    footer .footer-note {
+      font-size: 0.7rem;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    footer a {
+      font-size: 0.7rem;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #000;
+      text-decoration: none;
+      border: 2px solid #000;
+      padding: 6px 14px;
+    }
+
+    footer a:hover {
+      background: #000;
+      color: #ffff00;
+    }
+
+    /* ─── RESPONSIVE ─── */
+
+    @media (max-width: 680px) {
+      body { border: 3px solid #000; }
+
+      header { grid-template-columns: 1fr; }
+
+      .header-main {
+        border-right: none;
+        border-bottom: 4px solid #000;
+        padding: 24px 20px 20px;
+      }
+
+      .header-meta {
+        flex-direction: row;
+        align-items: center;
+        padding: 16px 20px;
+        gap: 24px;
+      }
+
+      .notice-bar { padding: 10px 20px; }
+
+      .item {
+        grid-template-columns: 56px 1fr;
+        grid-template-rows: auto auto;
+      }
+
+      .item-num { font-size: 1.4rem; }
+
+      .item-price-col {
+        grid-column: 2;
+        border-left: none;
+        border-top: 3px solid #000;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 10px 20px;
+        gap: 12px;
+        min-width: unset;
+      }
+
+      .item-body { padding: 16px 20px; }
+
+      footer {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-main">
+      <div class="header-label">Birthday 2026</div>
+      <h1>Wish<br>List</h1>
+    </div>
+    <div class="header-meta">
+      <div>
+        <div class="meta-line">Eugenie Gruman</div>
+        <div class="meta-line">Spring / Summer</div>
+        <div class="meta-line">Vol. 26</div>
+      </div>
+      <div>
+        <div class="meta-count">07<span>Items listed</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NOTICE BAR -->
+  <div class="notice-bar">
+    !! No pressure. Any one item. Or none. Just glad you're here. !!
+  </div>
+
+  <!-- ITEMS -->
+
+  <div class="item">
+    <div class="item-num">01</div>
+    <div class="item-body">
+      <div class="item-category">Experience</div>
+      <div class="item-name">Museum Membership</div>
+      <div class="item-note">MoMA, the Met, the Whitney — one year. I will use it constantly. This is the gift I never buy myself.</div>
+    </div>
+    <div class="item-price-col">
+      <div class="item-price">$60–120</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-num">02</div>
+    <div class="item-body">
+      <div class="item-category">Reading</div>
+      <div class="item-name">Books You'd Recommend</div>
+      <div class="item-note">Fiction, essays, memoir — whatever you loved recently. I trust your taste over any algorithm.</div>
+    </div>
+    <div class="item-price-col">
+      <div class="item-price">~$20</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-num">03</div>
+    <div class="item-body">
+      <div class="item-category">Coffee</div>
+      <div class="item-name">Specialty Coffee Sub</div>
+      <div class="item-note">3 months, single-origin, interesting provenance. The kind with tasting notes I'll actually read.</div>
+    </div>
+    <div class="item-price-col">
+      <div class="item-price">$45–75</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-num">04</div>
+    <div class="item-body">
+      <div class="item-category">Home</div>
+      <div class="item-name">A Good Candle</div>
+      <div class="item-note">Warm or woodsy. Diptyque, Aesop, or an indie brand you love. For Sunday mornings.</div>
+    </div>
+    <div class="item-price-col">
+      <div class="item-price">$30–60</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-num">05</div>
+    <div class="item-body">
+      <div class="item-category">Skin</div>
+      <div class="item-name">Fancy Hand Cream</div>
+      <div class="item-note">The kind I'd never justify buying myself but always love receiving. Any brand you stand behind.</div>
+    </div>
+    <div class="item-price-col">
+      <div class="item-price">~$25</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-num">06</div>
+    <div class="item-body">
+      <div class="item-category">Wildcard</div>
+      <div class="item-name">Something From Your Heart</div>
+      <div class="item-note">Homemade, handpicked, or something you just thought I'd like. Always the best gifts. No price required.</div>
+    </div>
+    <div class="item-price-col">
+      <div class="item-price">✦</div>
+    </div>
+  </div>
+
+  <div class="item claimed">
+    <div class="item-num">07</div>
+    <div class="item-body">
+      <div class="item-category">Wear</div>
+      <div class="item-name">Linen Scarf, Neutral</div>
+      <div class="item-note">Lightweight, summer into fall. Already claimed. Thank you!</div>
+    </div>
+    <div class="item-price-col">
+      <div class="item-price">—</div>
+      <div class="claimed-stamp">Claimed</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">Thank you for being here — it means everything.</span>
+    <a href="index.html">← Gallery</a>
+  </footer>
+
+</body>
+</html>

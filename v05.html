@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eugenie's wishlist 🎀</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: #f0e8ff;
+      color: #1a0a2e;
+      min-height: 100vh;
+      padding: 0 0 80px;
+    }
+
+    /* ─── HEADER ─── */
+
+    header {
+      background: #1a0a2e;
+      color: #fff;
+      padding: 40px 32px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 240px;
+      height: 240px;
+      background: #7c3aed;
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 30%;
+      width: 140px;
+      height: 140px;
+      background: #f472b6;
+      border-radius: 50%;
+      opacity: 0.3;
+    }
+
+    .header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #7c3aed;
+      color: #e9d5ff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    header h1 .accent {
+      color: #f472b6;
+    }
+
+    header h1 .accent2 {
+      color: #34d399;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: #a78bfa;
+      max-width: 440px;
+      line-height: 1.6;
+    }
+
+    /* ─── MAIN ─── */
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7c3aed;
+      margin-bottom: 16px;
+    }
+
+    /* ─── ITEMS ─── */
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .item {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      border: 2px solid transparent;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .item:hover {
+      border-color: #c4b5fd;
+      transform: translateY(-2px);
+    }
+
+    .item.claimed {
+      background: #f8f5ff;
+      opacity: 0.6;
+    }
+
+    .item-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .bg-purple  { background: #ede9fe; }
+    .bg-pink    { background: #fce7f3; }
+    .bg-green   { background: #d1fae5; }
+    .bg-yellow  { background: #fef9c3; }
+    .bg-blue    { background: #dbeafe; }
+    .bg-orange  { background: #ffedd5; }
+    .bg-gray    { background: #f3f4f6; }
+
+    .item-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-name {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .item.claimed .item-name {
+      text-decoration: line-through;
+      color: #9ca3af;
+    }
+
+    .item-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+      line-height: 1.45;
+    }
+
+    .item.claimed .item-note {
+      color: #c4b5fd;
+    }
+
+    .item-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .item-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #7c3aed;
+      white-space: nowrap;
+    }
+
+    .item.claimed .item-price {
+      color: #c4b5fd;
+    }
+
+    .tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .tag-purple { background: #ede9fe; color: #7c3aed; }
+    .tag-pink   { background: #fce7f3; color: #db2777; }
+    .tag-green  { background: #d1fae5; color: #059669; }
+    .tag-yellow { background: #fef9c3; color: #b45309; }
+    .tag-blue   { background: #dbeafe; color: #1d4ed8; }
+    .tag-orange { background: #ffedd5; color: #c2410c; }
+    .tag-gray   { background: #f3f4f6; color: #6b7280; }
+
+    .claimed-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #e5e7eb;
+      color: #9ca3af;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* ─── FOOTER ─── */
+
+    footer {
+      max-width: 720px;
+      margin: 40px auto 0;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-note {
+      font-size: 0.82rem;
+      color: #7c3aed;
+    }
+
+    footer a {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1a0a2e;
+      text-decoration: none;
+      background: #e9d5ff;
+      padding: 7px 16px;
+      border-radius: 100px;
+    }
+
+    footer a:hover { background: #c4b5fd; }
+
+    /* ─── RESPONSIVE ─── */
+
+    @media (max-width: 540px) {
+      .item { flex-wrap: wrap; }
+      .item-right { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="header-pill">🎀 Birthday 2026</div>
+      <h1>eugenie's<br><span class="accent">wish</span><span class="accent2">list</span> ✨</h1>
+      <p>things i'd genuinely love — big, small, and everything in between. no pressure at all, just happy you're here!!</p>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="section-label">7 things i'd love 👇</div>
+
+    <div class="items">
+
+      <div class="item">
+        <div class="item-icon bg-purple">🎨</div>
+        <div class="item-body">
+          <div class="item-name">museum membership for a year</div>
+          <div class="item-note">MoMA, the Met, the Whitney — any one-year pass. i would use it ALL the time</div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">$60–120</div>
+          <span class="tag tag-purple">experience</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-icon bg-yellow">📚</div>
+        <div class="item-body">
+          <div class="item-name">books you'd actually recommend</div>
+          <div class="item-note">fiction, essays, memoir — whatever you loved recently. i trust ur taste!!</div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">~$20</div>
+          <span class="tag tag-yellow">reading</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-icon bg-orange">☕</div>
+        <div class="item-body">
+          <div class="item-name">specialty coffee subscription (3 mo)</div>
+          <div class="item-note">single-origin, interesting, comes with tasting notes i'll actually read lol</div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">$45–75</div>
+          <span class="tag tag-orange">coffee</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-icon bg-pink">🕯️</div>
+        <div class="item-body">
+          <div class="item-name">a really good candle</div>
+          <div class="item-note">warm or woodsy scent — diptyque, aesop, or whatever indie brand u love</div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">$30–60</div>
+          <span class="tag tag-pink">home</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-icon bg-green">🧴</div>
+        <div class="item-body">
+          <div class="item-name">fancy hand cream</div>
+          <div class="item-note">the kind i'd never buy myself but absolutely love when i get it as a gift</div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">~$25</div>
+          <span class="tag tag-green">skin</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="item-icon bg-blue">💌</div>
+        <div class="item-body">
+          <div class="item-name">something from the heart</div>
+          <div class="item-note">homemade, handpicked, or just something u thought i'd love — always the best gift fr</div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">✨</div>
+          <span class="tag tag-blue">wildcard</span>
+        </div>
+      </div>
+
+      <div class="item claimed">
+        <div class="item-icon bg-gray">🧣</div>
+        <div class="item-body">
+          <div class="item-name">linen scarf, neutral tones</div>
+          <div class="item-note">lightweight, summer into fall — already on its way!!</div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">—</div>
+          <span class="claimed-tag">claimed ✓</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">ty for being here, it means so much 🫶</span>
+    <a href="index.html">← back to gallery</a>
+  </footer>
+
+</body>
+</html>

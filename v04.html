@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eugenie's Wishlist — Curated Selection</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #0e0c0a;
+      color: #e8dfc8;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+
+    header {
+      text-align: center;
+      padding: 64px 48px 56px;
+      border-bottom: 1px solid #2e2920;
+      position: relative;
+    }
+
+    .gold-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #b8942a, transparent);
+      margin-bottom: 48px;
+    }
+
+    .occasion-tag {
+      display: inline-block;
+      font-family: sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #b8942a;
+      margin-bottom: 24px;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: normal;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f0e6cc;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    header h1 em {
+      font-style: italic;
+      letter-spacing: 0.04em;
+      color: #b8942a;
+    }
+
+    header .subtitle {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      color: #6a5e48;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+
+    .gold-rule-bottom {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #b8942a, transparent);
+      margin: 0 auto;
+    }
+
+    /* ─── INTRO ─── */
+
+    .intro {
+      max-width: 520px;
+      margin: 48px auto;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .intro p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #9a8e78;
+      font-style: italic;
+    }
+
+    /* ─── ITEMS ─── */
+
+    .items {
+      max-width: 760px;
+      margin: 0 auto 64px;
+      padding: 0 24px;
+    }
+
+    .item {
+      border-top: 1px solid #2a2318;
+      padding: 36px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: start;
+      transition: background 0.2s;
+    }
+
+    .item:last-child {
+      border-bottom: 1px solid #2a2318;
+    }
+
+    .item-left {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .item-index {
+      font-family: sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: #4a4030;
+      padding-top: 6px;
+      flex-shrink: 0;
+      width: 24px;
+    }
+
+    .item-content {}
+
+    .item-category {
+      font-family: sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #b8942a;
+      margin-bottom: 10px;
+    }
+
+    .item.claimed .item-category {
+      color: #4a4030;
+    }
+
+    .item-name {
+      font-size: 1.3rem;
+      font-weight: normal;
+      letter-spacing: 0.04em;
+      color: #f0e6cc;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .item.claimed .item-name {
+      color: #4a4030;
+      text-decoration: line-through;
+      text-decoration-color: #3a3020;
+    }
+
+    .item-note {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: #6a5e48;
+    }
+
+    .item.claimed .item-note {
+      color: #3a3020;
+    }
+
+    .item-right {
+      text-align: right;
+      padding-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .item-price {
+      font-family: sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      color: #b8942a;
+      white-space: nowrap;
+    }
+
+    .item.claimed .item-price {
+      color: #3a3020;
+    }
+
+    .claimed-badge {
+      display: inline-block;
+      font-family: sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #4a4030;
+      border: 1px solid #2e2518;
+      padding: 4px 10px;
+      margin-top: 8px;
+    }
+
+    /* ─── DIVIDER ─── */
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 760px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+    }
+
+    .section-divider .line {
+      flex: 1;
+      height: 1px;
+      background: #2a2318;
+    }
+
+    .section-divider .diamond {
+      color: #b8942a;
+      font-size: 0.5rem;
+    }
+
+    /* ─── FOOTER ─── */
+
+    footer {
+      border-top: 1px solid #2e2920;
+      padding: 36px 48px;
+    }
+
+    .footer-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-note {
+      font-style: italic;
+      font-size: 0.88rem;
+      color: #4a4030;
+    }
+
+    footer a {
+      font-family: sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #b8942a;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: #d4aa40; }
+
+    /* ─── RESPONSIVE ─── */
+
+    @media (max-width: 600px) {
+      header { padding: 48px 24px 40px; }
+      .item { grid-template-columns: 1fr; gap: 12px; }
+      .item-right { text-align: left; padding-top: 0; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="gold-rule"></div>
+    <div class="occasion-tag">Birthday 2026 &nbsp;·&nbsp; A Curated Selection</div>
+    <h1>The Wishlist of<br><em>Eugenie Gruman</em></h1>
+    <div class="subtitle">Spring / Summer &nbsp;·&nbsp; Vol. XXVI</div>
+    <div class="gold-rule-bottom"></div>
+  </header>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <p>"A few things I would cherish — offered not as demands, but as invitations. Whatever you choose, or nothing at all, your presence is the gift."</p>
+  </div>
+
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="diamond">◆</div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ITEMS -->
+  <div class="items">
+
+    <div class="item">
+      <div class="item-left">
+        <div class="item-index">I</div>
+        <div class="item-content">
+          <div class="item-category">Experience</div>
+          <div class="item-name">A Museum Membership, Gifted for the Year</div>
+          <div class="item-note">MoMA, the Met, the Whitney — any institution, one year. I would use it constantly, on quiet mornings and rainy afternoons. The kind of gift that keeps arriving.</div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">$60 – 120</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-left">
+        <div class="item-index">II</div>
+        <div class="item-content">
+          <div class="item-category">Reading</div>
+          <div class="item-name">Books You Would Personally Recommend</div>
+          <div class="item-note">Fiction, essays, memoir — whatever moved you recently. A book chosen by someone I love is always the right book.</div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">~$20</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-left">
+        <div class="item-index">III</div>
+        <div class="item-content">
+          <div class="item-category">Ritual</div>
+          <div class="item-name">A Candle — Warm or Woodsy</div>
+          <div class="item-note">Diptyque, Aesop, or a smaller maker you admire. Something to light on a Sunday. Scent is the closest thing to memory.</div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">$30 – 60</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-left">
+        <div class="item-index">IV</div>
+        <div class="item-content">
+          <div class="item-category">Coffee</div>
+          <div class="item-name">Specialty Coffee Subscription — 3 Months</div>
+          <div class="item-note">Single-origin, interesting provenance, tasting notes I'll read carefully. The luxury of a slow morning, every morning.</div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">$45 – 75</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-left">
+        <div class="item-index">V</div>
+        <div class="item-content">
+          <div class="item-category">Skin</div>
+          <div class="item-name">A Fine Hand Cream</div>
+          <div class="item-note">The variety I'd never justify for myself. Something with a considered scent and a beautifully weighted jar.</div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">~$25</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-left">
+        <div class="item-index">VI</div>
+        <div class="item-content">
+          <div class="item-category">From the Heart</div>
+          <div class="item-name">Something Only You Could Give</div>
+          <div class="item-note">Handmade, handpicked, or simply something you felt I should have. These are always, without exception, the finest gifts.</div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">✦</div>
+      </div>
+    </div>
+
+    <div class="item claimed">
+      <div class="item-left">
+        <div class="item-index">VII</div>
+        <div class="item-content">
+          <div class="item-category">Wear</div>
+          <div class="item-name">Linen Scarf in Neutral Tones</div>
+          <div class="item-note">Lightweight, summer into fall. This one has found its home. Thank you.</div>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price">—</div>
+        <div class="claimed-badge">Reserved</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-note">Thank you, truly, for being here.</span>
+      <a href="index.html">← Return to Gallery</a>
+    </div>
+  </footer>
+
+</body>
+</html>
