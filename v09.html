@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eugenie Gruman's Wishlist · Registry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+    }
+
+    /* ─── TOP NAV ─── */
+
+    .topnav {
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 32px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topnav-logo {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+    }
+
+    .topnav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 0.78rem;
+      color: #555;
+    }
+
+    .topnav-links a {
+      color: #555;
+      text-decoration: none;
+    }
+
+    .topnav-links a:hover { color: #1a1a1a; }
+
+    .topnav-links .shipping {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+    }
+
+    /* ─── HERO ─── */
+
+    .hero {
+      text-align: center;
+      padding: 52px 24px 40px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .hero-date {
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .hero-note {
+      font-size: 0.85rem;
+      color: #555;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ─── FILTER BAR ─── */
+
+    .filter-bar {
+      padding: 14px 32px;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid #d0d0d0;
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #333;
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .pill .chevron {
+      font-size: 0.6rem;
+      color: #888;
+    }
+
+    .filter-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.78rem;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .filter-right .count { font-weight: 500; color: #1a1a1a; }
+
+    .sort-select {
+      font-family: inherit;
+      font-size: 0.78rem;
+      border: 1px solid #d0d0d0;
+      border-radius: 100px;
+      padding: 6px 12px;
+      color: #333;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    /* ─── GRID ─── */
+
+    .grid-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 24px 72px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 32px 24px;
+    }
+
+    /* ─── CARD ─── */
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+      background: #f0ece4;
+    }
+
+    /* Each item gets a unique placeholder "photo" color */
+    .img-museum   { background: linear-gradient(135deg, #d4cfc8 0%, #b8b0a4 100%); }
+    .img-books    { background: linear-gradient(135deg, #ddd5c8 0%, #c4b8a8 100%); }
+    .img-coffee   { background: linear-gradient(135deg, #c8b89a 0%, #a89070 100%); }
+    .img-candle   { background: linear-gradient(135deg, #e0d8cc 0%, #c8c0b0 100%); }
+    .img-cream    { background: linear-gradient(135deg, #e8e0d4 0%, #d0c8bc 100%); }
+    .img-heart    { background: linear-gradient(135deg, #d8d4d0 0%, #c0bab4 100%); }
+    .img-scarf    { background: linear-gradient(135deg, #ccc8c0 0%, #b0aca4 100%); }
+
+    .card-img-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      opacity: 0.6;
+    }
+
+    .fund-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 100px;
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #333;
+      padding: 3px 10px;
+      letter-spacing: 0.03em;
+    }
+
+    .claimed-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .claimed-overlay span {
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+
+    .card-brand {
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: #888;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .card-name {
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: #1a1a1a;
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+
+    .card-price {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .card-shipping {
+      font-size: 0.72rem;
+      color: #2a7a4a;
+      margin-bottom: 10px;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 3px;
+      background: #e8e8e8;
+      border-radius: 2px;
+      margin-bottom: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #1a1a1a;
+      border-radius: 2px;
+    }
+
+    .progress-label {
+      font-size: 0.68rem;
+      color: #888;
+    }
+
+    /* CTA button */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 9px 0;
+      background: #1a1a1a;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .btn:hover { background: #333; }
+
+    .btn.btn-outline {
+      background: #fff;
+      color: #1a1a1a;
+      border: 1px solid #d0d0d0;
+    }
+
+    .btn.btn-outline:hover { background: #f5f5f5; }
+
+    .btn.btn-disabled {
+      background: #e8e8e8;
+      color: #aaa;
+      cursor: default;
+    }
+
+    .card-meta {
+      font-size: 0.68rem;
+      color: #aaa;
+    }
+
+    /* ─── FOOTER ─── */
+
+    footer {
+      border-top: 1px solid #e8e8e8;
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: #aaa;
+    }
+
+    footer a {
+      font-size: 0.78rem;
+      color: #555;
+      text-decoration: none;
+    }
+
+    footer a:hover { color: #1a1a1a; text-decoration: underline; }
+
+    /* ─── RESPONSIVE ─── */
+
+    @media (max-width: 600px) {
+      .topnav { padding: 0 16px; }
+      .topnav-links { gap: 12px; }
+      .topnav-links .shipping { display: none; }
+      .filter-bar { padding: 12px 16px; }
+      .grid-wrap { padding: 24px 16px 56px; }
+      footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <div class="topnav-logo">Wishlist</div>
+    <div class="topnav-links">
+      <a href="#">About</a>
+      <a href="#">1-408-657-9652</a>
+      <span class="shipping">🚚 Free shipping, every day</span>
+      <a href="#">🛒</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Eugenie Gruman</h1>
+    <div class="hero-date">Birthday — Spring 2026</div>
+    <p class="hero-note">Your presence is truly the greatest gift we could ask for. If you'd still like to give a gift, I've put together a small list of things that would genuinely delight me.</p>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="filter-pills">
+      <div class="pill">Categories <span class="chevron">▾</span></div>
+      <div class="pill">Availability <span class="chevron">▾</span></div>
+      <div class="pill">Price <span class="chevron">▾</span></div>
+      <div class="pill">Shipping <span class="chevron">▾</span></div>
+    </div>
+    <div class="filter-right">
+      <span><span class="count">7</span> gifts</span>
+      <select class="sort-select">
+        <option>Sort: Featured</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid-wrap">
+    <div class="grid">
+
+      <!-- Museum -->
+      <div class="card">
+        <div class="card-img img-museum">
+          <div class="card-img-inner">🎨</div>
+          <div class="fund-badge">★ Most Wanted</div>
+        </div>
+        <div class="card-brand">Experience</div>
+        <div class="card-name">Museum Membership — 1 Year</div>
+        <div class="card-price">$60.00 – $120.00</div>
+        <div class="card-shipping">✓ Free shipping</div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="progress-label">$0 of $80 still needed</div>
+        </div>
+        <button class="btn">Contribute</button>
+        <div class="card-meta">Asking for 1 · Purchased 0</div>
+      </div>
+
+      <!-- Books -->
+      <div class="card">
+        <div class="card-img img-books">
+          <div class="card-img-inner">📚</div>
+          <div class="fund-badge">★ Most Wanted</div>
+        </div>
+        <div class="card-brand">Reading</div>
+        <div class="card-name">Books You'd Personally Recommend</div>
+        <div class="card-price">~$20.00</div>
+        <div class="card-shipping">✓ Free shipping</div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="progress-label">$0 of $20 still needed</div>
+        </div>
+        <button class="btn">Contribute</button>
+        <div class="card-meta">Asking for 3 · Purchased 0</div>
+      </div>
+
+      <!-- Coffee -->
+      <div class="card">
+        <div class="card-img img-coffee">
+          <div class="card-img-inner">☕</div>
+        </div>
+        <div class="card-brand">Subscription</div>
+        <div class="card-name">Specialty Coffee Subscription, 3 Months</div>
+        <div class="card-price">$45.00 – $75.00</div>
+        <div class="card-shipping">✓ Free shipping</div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          <div class="progress-label">$0 of $60 still needed</div>
+        </div>
+        <button class="btn">Contribute</button>
+        <div class="card-meta">Asking for 1 · Purchased 0</div>
+      </div>
+
+      <!-- Candle -->
+      <div class="card">
+        <div class="card-img img-candle">
+          <div class="card-img-inner">🕯️</div>
+        </div>
+        <div class="card-brand">Home · Diptyque / Aesop</div>
+        <div class="card-name">A Good Candle — Warm or Woodsy</div>
+        <div class="card-price">$30.00 – $60.00</div>
+        <div class="card-shipping">✓ Free shipping</div>
+        <button class="btn btn-outline">Add to cart</button>
+        <div class="card-meta">Asking for 1 · Purchased 0</div>
+      </div>
+
+      <!-- Hand Cream -->
+      <div class="card">
+        <div class="card-img img-cream">
+          <div class="card-img-inner">🧴</div>
+        </div>
+        <div class="card-brand">Skin</div>
+        <div class="card-name">Fancy Hand Cream</div>
+        <div class="card-price">~$25.00</div>
+        <div class="card-shipping">✓ Free shipping</div>
+        <button class="btn btn-outline">Add to cart</button>
+        <div class="card-meta">Asking for 1 · Purchased 0</div>
+      </div>
+
+      <!-- From the heart -->
+      <div class="card">
+        <div class="card-img img-heart">
+          <div class="card-img-inner">💌</div>
+          <div class="fund-badge">★ Most Wanted</div>
+        </div>
+        <div class="card-brand">Wildcard</div>
+        <div class="card-name">Something From the Heart</div>
+        <div class="card-price">Priceless</div>
+        <div class="card-shipping">✓ Hand delivered</div>
+        <button class="btn btn-outline">Claim this one</button>
+        <div class="card-meta">Asking for 1 · Purchased 0</div>
+      </div>
+
+      <!-- Scarf — claimed -->
+      <div class="card">
+        <div class="card-img img-scarf">
+          <div class="card-img-inner">🧣</div>
+          <div class="claimed-overlay"><span>Purchased</span></div>
+        </div>
+        <div class="card-brand">Wear</div>
+        <div class="card-name">Linen Scarf, Neutral Tones</div>
+        <div class="card-price">—</div>
+        <div class="card-shipping" style="color:#aaa;">Shipped</div>
+        <button class="btn btn-disabled" disabled>Purchased</button>
+        <div class="card-meta">Asking for 1 · Purchased 1</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">© 2026 Eugenie Gruman · Built with care</span>
+    <a href="index.html">← Back to gallery</a>
+  </footer>
+
+</body>
+</html>
